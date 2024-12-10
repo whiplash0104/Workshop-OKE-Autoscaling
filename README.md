@@ -208,7 +208,7 @@ Una vez finalizado el proceso de autoscaling podremos ver los nodos creados y ac
 
 10. Finalmente, para volver el cluster a su estado original escalamos a 0 las réplicas del la aplicación
 ```
-kubectl scale deployment apptest-dp --replicas=0 -n test
+kubectl scale deployment apptest-dp --replicas=2 -n test
 ```
 Posterior a al scale down validar la cantidad de nodos existentes en el cluster
 
