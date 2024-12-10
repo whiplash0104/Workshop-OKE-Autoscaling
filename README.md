@@ -202,20 +202,14 @@ kubectl scale deployment apptest-dp --replicas=300 -n test
 ```
 <img width="950" alt="image" src="https://github.com/user-attachments/assets/8f411c8c-a918-4555-a5ae-d7ab2b382236">
 
+Una vez finalizado el proceso de autoscaling podremos ver los nodos creados y activos en el node pool
 
-10.  
-11. asd
-12. add
-13. das
-14. asddas
-15. das
-16. das
-17. asd
-18. asd
-19. asd
-20. asd
-21. das
-22. sda
-23. asd
-24. das
-25. das
+<img width="945" alt="image" src="https://github.com/user-attachments/assets/d2091fe4-abfe-40dd-a528-2d149612d6e5">
+
+10. Finalmente, para volver el cluster a su estado original escalamos a 0 las réplicas del la aplicación
+```
+kubectl scale deployment apptest-dp --replicas=0 -n test
+```
+Posterior a al scale down validar la cantidad de nodos existentes en el cluster
+
+
