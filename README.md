@@ -171,6 +171,8 @@ Una vez creado el archivo, aplicarlo en cluster
 kubectl apply -f dp.yaml
 ```
 
+https://github.com/user-attachments/assets/a7306689-5dbd-4ad2-901d-922619bb1107
+
 Para validar la correcta recaión ejecutar
 ```
 kubectl get all -n test
@@ -185,11 +187,9 @@ deployment.apps/apptest-dp   0/3     3            0           76s
 NAME                                   DESIRED   CURRENT   READY   AGE
 replicaset.apps/apptest-dp-b4f9d4f87   3         3         0       76s
 ```
+<img width="497" alt="image" src="https://github.com/user-attachments/assets/d4f3852e-f9f8-44fa-abc7-2a65545ce493">
 
-https://github.com/user-attachments/assets/a7306689-5dbd-4ad2-901d-922619bb1107
-
-
-9. 
+9. Para validar el autoscaler aumentar en réplicas el despliegue 
 
 10.  
 11. asd
