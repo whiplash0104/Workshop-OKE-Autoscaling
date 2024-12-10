@@ -174,22 +174,34 @@ kubectl apply -f dp.yaml
 https://github.com/user-attachments/assets/a7306689-5dbd-4ad2-901d-922619bb1107
 
 Para validar la correcta recaión ejecutar
+
 ```
 kubectl get all -n test
-NAME                             READY   STATUS             RESTARTS   AGE
-pod/apptest-dp-b4f9d4f87-4jjsx   0/1     InvalidImageName   0          76s
-pod/apptest-dp-b4f9d4f87-9ml8k   0/1     InvalidImageName   0          76s
-pod/apptest-dp-b4f9d4f87-nt99t   0/1     InvalidImageName   0          76s
+NAME                             READY   STATUS    RESTARTS   AGE
+pod/apptest-dp-cc6b58886-26vr8   1/1     Running   0          6s
+pod/apptest-dp-cc6b58886-2h2gr   1/1     Running   0          6s
+pod/apptest-dp-cc6b58886-wpcsx   1/1     Running   0          6s
 
 NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/apptest-dp   0/3     3            0           76s
+deployment.apps/apptest-dp   3/3     3            3           7s
 
 NAME                                   DESIRED   CURRENT   READY   AGE
-replicaset.apps/apptest-dp-b4f9d4f87   3         3         0       76s
+replicaset.apps/apptest-dp-cc6b58886   3         3         3       7s
 ```
 <img width="497" alt="image" src="https://github.com/user-attachments/assets/d4f3852e-f9f8-44fa-abc7-2a65545ce493">
 
-9. Para validar el autoscaler aumentar en réplicas el despliegue 
+9. Para validar el autoscaler aumentar en réplicas el despliegue
+
+Revisar la cantidad de nodos en el nodepool
+
+<img width="886" alt="image" src="https://github.com/user-attachments/assets/a021cbff-2d03-4078-a576-66aa879a528f">
+
+Ejecutar la escalación de pods
+```
+kubectl scale deployment apptest-dp --replicas=300 -n test
+```
+<img width="950" alt="image" src="https://github.com/user-attachments/assets/8f411c8c-a918-4555-a5ae-d7ab2b382236">
+
 
 10.  
 11. asd
