@@ -212,4 +212,6 @@ kubectl scale deployment apptest-dp --replicas=0 -n test
 ```
 Posterior a al scale down validar la cantidad de nodos existentes en el cluster
 
+<img width="948" alt="image" src="https://github.com/user-attachments/assets/dd22a0fc-bfec-4be1-94f9-176bfd04e54e">
+
 
