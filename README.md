@@ -102,21 +102,108 @@ Esto quiere decir que trabajaremos con un mínimo de 1 nodo y un máximo de 5 en
 
 https://github.com/user-attachments/assets/070ee1b4-29f8-44ce-8dc4-01deb4e9964a
 
-7. Cuando la configuración de Autoscaler esté habilitada y configurada 
+7. Cuando la configuración de Autoscaler esté habilitada y configurado acceder al cluster OKE
+```
+haciendo click en "Access Cluster" y la opción Cloud Shell Access, copiamos el comando de acceso y click en "Launch Cloud Shell"
+Validamos el acceso a este con el comando
+  kubectl get nodes
+En mi caso ocupo el comando "k", que es un alias de kubectl
+```
+https://github.com/user-attachments/assets/cc2ff877-fb15-4394-a8b8-f401ecc22025
 
-8.  
-9. asd
-10. add
-11. das
-12. asddas
+Validamos la configuración del autoscaling con el comando
+```
+kubectl get pods -n kube-system
+NAME                                   READY   STATUS    RESTARTS      AGE
+cluster-autoscaler-7865498cb7-xsqgr    1/1     Running   0             28m
+coredns-7d849c6df7-shg6h               1/1     Running   0             68m
+csi-oci-node-tdg5z                     1/1     Running   1 (64m ago)   66m
+kube-dns-autoscaler-57677746dd-wb8wq   1/1     Running   0             68m
+kube-proxy-k46lb                       1/1     Running   0             66m
+proxymux-client-zr5d8                  1/1     Running   0             66m
+vcn-native-ip-cni-wjzbz                1/1     Running   0             66m
+```
+Como podemos validar, se creó el pod **cluster-autoscaler-7865498cb7-xsqgr** que, en este caso, es el encargado de mantener autoscaling 
+
+8. Copiamos este yaml y lo desplegamos en cloud shell
+```
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apptest-dp
+  labels:
+    app: apptest
+  namespace: test
+spec:
+  selector:
+    matchLabels:
+      app: apptest
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: apptest
+    spec:
+      containers:
+      - name: apptest
+        image: XXXXXXXXXXXXXXXXXXXXX
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 500m
+            memory: 800Mi
+          requests:
+            cpu: 400m
+            memory: 500Mi
+```
+Este creará un namespace llamado _test_ y una aplicación llamada _apptest_
+En el campo image, se puede definir la creada, en caso de no tener una imagen, usar la siguiente: fra.ocir.io/frdpzymjc7jw/apptest:latest
+
+Una vez creado el archivo, aplicarlo en cluster
+```
+kubectl apply -f dp.yaml
+```
+
+Para validar la correcta recaión ejecutar
+```
+kubectl get all -n test
+NAME                             READY   STATUS             RESTARTS   AGE
+pod/apptest-dp-b4f9d4f87-4jjsx   0/1     InvalidImageName   0          76s
+pod/apptest-dp-b4f9d4f87-9ml8k   0/1     InvalidImageName   0          76s
+pod/apptest-dp-b4f9d4f87-nt99t   0/1     InvalidImageName   0          76s
+
+NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/apptest-dp   0/3     3            0           76s
+
+NAME                                   DESIRED   CURRENT   READY   AGE
+replicaset.apps/apptest-dp-b4f9d4f87   3         3         0       76s
+```
+
+https://github.com/user-attachments/assets/a7306689-5dbd-4ad2-901d-922619bb1107
+
+
+9. 
+
+10.  
+11. asd
+12. add
 13. das
-14. das
-15. asd
-16. asd
+14. asddas
+15. das
+16. das
 17. asd
 18. asd
-19. das
-20. sda
-21. asd
-22. das
-23. das
+19. asd
+20. asd
+21. das
+22. sda
+23. asd
+24. das
+25. das
