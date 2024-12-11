@@ -83,7 +83,42 @@ $ podman push fra.ocir.io/frdpzymjc7jw/app1fbasso:latest
 
 https://github.com/user-attachments/assets/c4bc8823-1e63-4226-8f90-bb6dc94754ed
 
-6. Una vez creado el cluster, se debe habilitar la opción de Autoscalin
+6. Una vez creado el cluster, se debe crear un grupo dinámico, policy y habilitar la opción de Autoscaling
+
+6.1 Crear grupo dinámico
+```
+Buscar y copiar OCID de compartmente:
+Menú Principal > Identity & Security > Compartment
+
+Crear grupo dinámico:
+Menú Principal > Identity & Security > Domains > Default > Dynamic groups > Create dynamic group
+Name: oke-dynamic-USUARIO
+Description: grupo oke
+Rule: ALL {instance.compartment.id = 'ocid1.compartment.oc1..XXXXXXXXX'}
+```
+
+
+https://github.com/user-attachments/assets/e82953c7-7e9e-4cea-8ebd-ca7fc8a0923b
+
+
+6.2 Crear Policy
+```
+Crear policies en COMPARTMENTE ROOT:
+Menú Principal > Identity & Security >  Policy
+
+Allow dynamic-group oke-dynamic-USUARIO to manage cluster-node-pools in compartment id ocid1.compartment.oc1..XXXXXXXXXXXXXXXX	
+Allow dynamic-group oke-dynamic-USUARIO to manage instance-family in compartment id ocid1.compartment.oc1..XXXXXXXXXXXXXXXX	
+Allow dynamic-group oke-dynamic-USUARIO to use subnets in compartment id ocid1.compartment.oc1..XXXXXXXXXXXXXXXX	
+Allow dynamic-group oke-dynamic-USUARIO to read virtual-network-family in compartment id ocid1.compartment.oc1..XXXXXXXXXXXXXXXX	
+Allow dynamic-group oke-dynamic-USUARIO to use vnics in compartment id ocid1.compartment.oc1..XXXXXXXXXXXXXXXX
+Allow dynamic-group oke-dynamic-USUARIO to inspect compartments in compartment id ocid1.compartment.oc1..XXXXXXXXXXXXXXXX
+```
+
+
+https://github.com/user-attachments/assets/57a46d8e-5434-4606-861d-7853e7df5d28
+
+
+6.3 Habilitar Autoscaling
 ```
 Copiar OCID de node pool
 Menú Principal > Developer Services > Kubernetes Cluster (OKE) > Cluster creado > Node pool > pool1
